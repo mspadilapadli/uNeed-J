@@ -1,6 +1,10 @@
+const Post = require("../models/Posts");
+
 const resolvers = {
     Query: {
-        getPosts: async () => {},
+        getPosts: async () => {
+            return Post.getPosts();
+        },
         getPostById: async (_, args) => {},
     },
     Mutation: {
