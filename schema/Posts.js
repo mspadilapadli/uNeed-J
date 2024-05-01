@@ -34,7 +34,7 @@ input InputDataPost {
    content: String
    tags: [String]
    imgUrl: String 
-   authorId: String
+   
 
 }
 

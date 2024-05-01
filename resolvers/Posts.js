@@ -11,7 +11,14 @@ const resolvers = {
         },
     },
     Mutation: {
-        createPost: async () => {},
+        createPost: async (_, args) => {
+            const { content, tags, imgUrl } = args.newPost;
+
+            const data = await Post.addPost({ content, tags, imgUrl });
+            console.log(data);
+            const result = await Post.getPostById(data.insertedId);
+            return result;
+        },
     },
 };
 

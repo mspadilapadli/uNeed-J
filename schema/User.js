@@ -5,7 +5,7 @@ type User {
    name: String
    username: String
    email: String
-   password: String  
+   password: String
 }
 
 type Query {

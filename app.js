@@ -6,8 +6,10 @@ const { ApolloServer } = require("@apollo/server");
 const { startStandaloneServer } = require("@apollo/server/standalone");
 
 const postTypeDefs = require("./schema/Posts");
+const userTypeDefs = require("./schema/User");
 
 const postResolver = require("./resolvers/Posts");
+const userResolver = require("./resolvers/User");
 
 const server = new ApolloServer({
     typeDefs: [postTypeDefs],
