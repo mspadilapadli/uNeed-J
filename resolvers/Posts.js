@@ -5,7 +5,10 @@ const resolvers = {
         getPosts: async () => {
             return Post.getPosts();
         },
-        getPostById: async (_, args) => {},
+        getPostById: async (_, args) => {
+            const { _id } = args;
+            return Post.getPostById(_id);
+        },
     },
     Mutation: {
         createPost: async () => {},
