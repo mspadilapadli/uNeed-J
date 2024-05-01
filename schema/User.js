@@ -9,10 +9,11 @@ type User {
 }
 
 type Query {
+   getUserById(_id:ID!) : User
 }
 
 type Mutation {
-   
+
 }
 
 `;

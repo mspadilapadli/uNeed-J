@@ -26,10 +26,20 @@ type Likes {
 }
 
 type Query {
+   getPosts:[Post]
+   getPostById(_id:ID!): Post
+}
+
+input InputDataPost {
+   content: String
+   tags: [String]
+   imgUrl: String 
+   authorId: String
+
 }
 
 type Mutation {
-   
+   createPost(newPost: InputDataPost):Post
 }
 
 `;

@@ -1,9 +1,10 @@
 const resolvers = {
     Query: {
-        getPosts: () => {},
+        getPosts: async () => {},
+        getPostById: async (_, args) => {},
     },
     Mutation: {
-        createPost: () => {},
+        createPost: async () => {},
     },
 };
 

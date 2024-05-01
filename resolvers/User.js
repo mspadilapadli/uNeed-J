@@ -1,8 +1,10 @@
 const resolvers = {
-    Query: {},
+    Query: {
+        getUserById: async () => {},
+    },
     Mutation: {
-        register: () => {},
-        login: () => {},
+        register: async () => {},
+        login: async () => {},
     },
 };
 
