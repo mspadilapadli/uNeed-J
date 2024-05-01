@@ -9,11 +9,18 @@ type User {
 }
 
 type Query {
-   getUserById(_id:ID!) : User
+   getUserById(_id: ID!): User
+}
+
+input InputNewUser{
+   name: String
+   username: String
+   email: String
+   password: String
 }
 
 type Mutation {
-
+   addUser(newUser : InputNewUser) : User
 }
 
 `;

@@ -4,13 +4,25 @@ const resolvers = {
     Query: {
         getUserById: async (_, args) => {
             const { _id } = args;
-            const data = User.findUserById(_id);
-            console.log(data);
-            return data;
+            return await User.findUserById(_id);
         },
     },
     Mutation: {
-        // register: async () => {},
+        addUser: async (_, args) => {
+            const { name, username, email, password } = args.newUser;
+            const data = await User.addUser({
+                name,
+                username,
+                email,
+                password,
+            });
+            const option = {
+                projection: { password: 0 },
+            };
+            const result = await User.findUserById(data.insertedId, option);
+            console.log(result);
+            return result;
+        },
         // login: async () => {},
     },
 };

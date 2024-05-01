@@ -12,8 +12,8 @@ const postResolver = require("./resolvers/Posts");
 const userResolver = require("./resolvers/User");
 
 const server = new ApolloServer({
-    typeDefs: [postTypeDefs],
-    resolvers: [postResolver],
+    typeDefs: [postTypeDefs, userTypeDefs],
+    resolvers: [postResolver, userResolver],
     introspection: true,
 });
 
