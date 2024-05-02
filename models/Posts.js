@@ -25,6 +25,24 @@ class Post {
             updatedAt: date,
         });
     }
+
+    static async postComment(_id, content) {
+        // console.log(newPost, "newPost model");
+        let date = new Date();
+        return this.collection().updateOne(
+            { _id: new ObjectId(String(_id)) },
+            {
+                $push: {
+                    comments: {
+                        content: content,
+                        username: "dummy dulu",
+                        createdAt: date,
+                        updatedAt: date,
+                    },
+                },
+            }
+        );
+    }
 }
 
 module.exports = Post;

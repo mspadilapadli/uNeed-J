@@ -8,7 +8,13 @@ type User {
    password: String
 }
 
+type UserCredential{
+   access_token:String
+}
+
+
 type Query {
+   getUsers:[User]
    getUserById(_id: ID!): User
 }
 
@@ -21,6 +27,7 @@ input InputNewUser{
 
 type Mutation {
    addUser(newUser : InputNewUser) : User
+   login(email: String, password: String) : UserCredential
 }
 
 `;
