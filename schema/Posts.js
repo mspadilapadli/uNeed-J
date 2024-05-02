@@ -40,6 +40,7 @@ input InputDataPost {
 type Mutation {
    createPost(newPost: InputDataPost):Post
    createComment(_id: ID!, content: String): Post
+   createLike(_id: ID!): Post
 }
 
 `;

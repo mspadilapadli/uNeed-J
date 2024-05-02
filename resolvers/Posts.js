@@ -27,6 +27,10 @@ const resolvers = {
             console.log(result.comments);
             return result;
         },
+
+        createLike: async (_, args) => {
+            const { _id, content } = args;
+        },
     },
 };
 
