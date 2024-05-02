@@ -31,7 +31,7 @@ class User {
 
     static async findUserByEmail(email) {
         return await this.collection().findOne({
-            email: email,
+            email,
         });
         // return this.collection().findOne({ _id: new ObjectId(`${_id}`) });
     }

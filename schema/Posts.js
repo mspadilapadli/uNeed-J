@@ -34,12 +34,12 @@ input InputDataPost {
    content: String
    tags: [String]
    imgUrl: String 
-   
-
 }
+
 
 type Mutation {
    createPost(newPost: InputDataPost):Post
+   createComment(_id: ID!, content: String): Post
 }
 
 `;
