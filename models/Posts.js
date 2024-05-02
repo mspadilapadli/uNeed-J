@@ -43,6 +43,23 @@ class Post {
             }
         );
     }
+
+    static async postLike(_id, content) {
+        // console.log(newPost, "newPost model");
+        let date = new Date();
+        return this.collection().updateOne(
+            { _id: new ObjectId(String(_id)) },
+            {
+                $push: {
+                    likes: {
+                        username: "dummy dulu",
+                        createdAt: date,
+                        updatedAt: date,
+                    },
+                },
+            }
+        );
+    }
 }
 
 module.exports = Post;

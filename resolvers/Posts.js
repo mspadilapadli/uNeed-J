@@ -27,6 +27,14 @@ const resolvers = {
             console.log(result.comments);
             return result;
         },
+
+        createLike: async (_, args) => {
+            const { _id } = args;
+            const like = await Post.postLike(_id);
+            const result = await Post.getPostById(_id);
+            console.log(result.likes);
+            return result;
+        },
     },
 };
 
