@@ -14,11 +14,11 @@ class Post {
         // return this.collection().findOne({ _id: new ObjectId(`${_id}`) });
     }
     static async addPost(newPost) {
-        // console.log(newPost, "newPost model");
+        // console.log(newPost.authorId, "newPost authorId model");
         let date = new Date();
         return this.collection().insertOne({
             ...newPost,
-            authorId: "dummy",
+            authorId: new ObjectId(newPost.authorId),
             comments: [],
             likes: [],
             createdAt: date,

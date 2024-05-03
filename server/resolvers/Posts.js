@@ -11,10 +11,18 @@ const resolvers = {
         },
     },
     Mutation: {
-        createPost: async (_, args) => {
+        createPost: async (_, args, contextValue) => {
+            const auth = contextValue.authentication();
+            // console.log(auth, "authresolver");
+            // console.log(auth._id, "_id resolver");
             const { content, tags, imgUrl } = args.newPost;
 
-            const data = await Post.addPost({ content, tags, imgUrl });
+            const data = await Post.addPost({
+                content,
+                tags,
+                imgUrl,
+                authorId: auth._id,
+            });
             // console.log(data);
             const result = await Post.getPostById(data.insertedId);
             return result;
