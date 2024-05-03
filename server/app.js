@@ -50,7 +50,7 @@ startStandaloneServer(server, {
                         },
                     });
                 }
-                console.log(payload, "payload");
+                // console.log(payload, "payload");
 
                 return payload;
             },

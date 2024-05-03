@@ -62,7 +62,7 @@ const resolvers = {
                 _id: user._id,
                 email: user.email,
             });
-            console.log(access_token, "accesstoken");
+            // console.log(access_token, "accesstoken");
 
             return { access_token };
         },

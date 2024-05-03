@@ -7,7 +7,8 @@ const resolvers = {
         },
         getPostById: async (_, args) => {
             const { _id } = args;
-            return Post.getPostById(_id);
+            const data = await Post.getPostById(_id);
+            return data;
         },
     },
     Mutation: {

@@ -10,6 +10,7 @@ type Post {
    likes: [Likes]
    createdAt: String
    updatedAt: String
+   author: Author
 }
 
 type Comments {
@@ -28,6 +29,15 @@ type Likes {
 type Query {
    getPosts:[Post]
    getPostById(_id:ID!): Post
+}
+
+type Author {
+   _id: ID
+   name: String
+   username: String
+   email: String
+   
+
 }
 
 input InputDataPost {

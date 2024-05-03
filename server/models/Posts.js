@@ -7,11 +7,55 @@ class Post {
     }
 
     static async getPosts() {
-        return this.collection().find().toArray();
+        return this.collection()
+            .aggregate([
+                {
+                    $lookup: {
+                        from: "User",
+                        localField: "authorId",
+                        foreignField: "_id",
+                        as: "author",
+                    },
+                },
+                {
+                    $unwind: {
+                        path: "$author",
+                        preserveNullAndEmptyArrays: false,
+                    },
+                },
+            ])
+            .toArray();
     }
     static async getPostById(_id) {
-        return this.collection().findOne({ _id: new ObjectId(String(_id)) });
+        console.log(_id, "id post model");
+
+        // return this.collection().findOne({ _id: new ObjectId(String(_id)) });
         // return this.collection().findOne({ _id: new ObjectId(`${_id}`) });
+        const data = await this.collection()
+            .aggregate([
+                {
+                    $match: {
+                        _id: new ObjectId(_id),
+                    },
+                },
+                {
+                    $lookup: {
+                        from: "User",
+                        localField: "authorId",
+                        foreignField: "_id",
+                        as: "author",
+                    },
+                },
+                {
+                    $unwind: {
+                        path: "$author",
+                        preserveNullAndEmptyArrays: false,
+                    },
+                },
+            ])
+            .toArray();
+
+        return data[0];
     }
     static async addPost(newPost) {
         // console.log(newPost.authorId, "newPost authorId model");
