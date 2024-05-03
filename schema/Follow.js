@@ -8,6 +8,7 @@ type Follow {
    updatedAt: String
 
 type Query {
+getFollower:Follow
 }
 
 type Mutation {
