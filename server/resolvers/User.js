@@ -14,6 +14,13 @@ const resolvers = {
             const { _id } = args;
             return await User.findUserById(_id);
         },
+        searchUserByUsername: async (_, args, contextValue) => {
+            const auth = contextValue.authentication();
+            const { username } = args;
+            const data = await User.searchUsername(username);
+            console.log(data, "res search user");
+            return data;
+        },
     },
     Mutation: {
         addUser: async (_, args) => {
@@ -24,10 +31,10 @@ const resolvers = {
                 email,
                 password,
             });
-            const option = {
-                projection: { password: 0 },
-            };
-            const result = await User.findUserById(data.insertedId, option);
+            // const option = {
+            //     projection: { password: 0 },
+            // };
+            const result = await User.findUserById(data.insertedId);
             console.log(result);
             return result;
         },

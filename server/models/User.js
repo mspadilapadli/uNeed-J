@@ -9,14 +9,37 @@ class User {
     }
 
     static async getUsers() {
-        return this.collection().find().toArray();
+        return this.collection()
+            .find({}, { projection: { password: 0 } })
+            .toArray();
     }
 
     static async findUserById(_id) {
-        return await this.collection().findOne({
-            _id: new ObjectId(String(_id)),
-        });
+        return await this.collection().findOne(
+            {
+                _id: new ObjectId(String(_id)),
+            },
+            { projection: { password: 0 } }
+        );
         // return this.collection().findOne({ _id: new ObjectId(`${_id}`) });
+    }
+
+    static async searchUsername(username) {
+        return this.collection()
+            .aggregate([
+                {
+                    $match: {
+                        username: { $regex: username, $options: "i" },
+                        // username: { $regex: new RegExp(username, "i") },
+                    },
+                },
+                {
+                    $project: {
+                        password: 0,
+                    },
+                },
+            ])
+            .toArray();
     }
 
     static async addUser({ name, username, email, password }) {

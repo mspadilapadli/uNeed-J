@@ -16,6 +16,7 @@ type UserCredential{
 type Query {
    getUsers:[User]
    getUserById(_id: ID!): User
+   searchUserByUsername(username:String!) : [User]
 }
 
 input InputNewUser{
