@@ -69,6 +69,7 @@ const resolvers = {
             const access_token = createToken({
                 _id: user._id,
                 email: user.email,
+                username: user.username,
             });
             // console.log(access_token, "accesstoken");
 

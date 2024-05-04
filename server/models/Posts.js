@@ -1,5 +1,7 @@
 const { ObjectId } = require("mongodb");
 const { database } = require("../config/mongodb");
+const redis = require("../config/redis");
+const { GraphQLError } = require("graphql");
 
 class Post {
     static collection() {
@@ -7,29 +9,42 @@ class Post {
     }
 
     static async getPosts() {
-        return this.collection()
-            .aggregate([
-                {
-                    $lookup: {
-                        from: "User",
-                        localField: "authorId",
-                        foreignField: "_id",
-                        as: "author",
+        let posts = await redis.get("posts");
+        console.log(posts, "redis posts");
+        if (posts) {
+            return JSON.parse(posts);
+        } else {
+            posts = await this.collection()
+                .aggregate([
+                    {
+                        $sort: {
+                            createdAt: -1,
+                        },
                     },
-                },
-                {
-                    $unwind: {
-                        path: "$author",
-                        preserveNullAndEmptyArrays: false,
+                    {
+                        $lookup: {
+                            from: "User",
+                            localField: "authorId",
+                            foreignField: "_id",
+                            as: "author",
+                        },
                     },
-                },
-                {
-                    $project: {
-                        "author.password": 0,
+                    {
+                        $unwind: {
+                            path: "$author",
+                            preserveNullAndEmptyArrays: false,
+                        },
                     },
-                },
-            ])
-            .toArray();
+                    {
+                        $project: {
+                            "author.password": 0,
+                        },
+                    },
+                ])
+                .toArray();
+            await redis.set("posts", JSON.stringify(posts));
+        }
+        return posts;
     }
     static async getPostById(_id) {
         // return this.collection().findOne({ _id: new ObjectId(String(_id)) });
@@ -67,8 +82,15 @@ class Post {
     }
     static async addPost(newPost) {
         // console.log(newPost.authorId, "newPost authorId model");
+        if (!newPost.content || newPost.content.length < 1) {
+            throw new GraphQLError("content is required ", {
+                extensions: {
+                    code: "Bad Request",
+                },
+            });
+        }
         let date = new Date();
-        return this.collection().insertOne({
+        const data = await this.collection().insertOne({
             ...newPost,
             authorId: new ObjectId(newPost.authorId),
             comments: [],
@@ -76,41 +98,50 @@ class Post {
             createdAt: date,
             updatedAt: date,
         });
+        await redis.del("posts");
+        return data;
     }
 
-    static async postComment(_id, content) {
+    static async postComment(_id, content, username) {
         // console.log(newPost, "newPost model");
+        // console.log(username, "username  in model");
+
         let date = new Date();
-        return this.collection().updateOne(
+        let comment = await this.collection().updateOne(
             { _id: new ObjectId(String(_id)) },
             {
                 $push: {
                     comments: {
                         content: content,
-                        username: "dummy dulu",
+                        username,
                         createdAt: date,
                         updatedAt: date,
                     },
                 },
             }
         );
+        await redis.del("posts");
+        return comment;
     }
 
-    static async postLike(_id, content) {
+    static async postLike(_id, username) {
         // console.log(newPost, "newPost model");
+
         let date = new Date();
-        return this.collection().updateOne(
+        const like = await this.collection().updateOne(
             { _id: new ObjectId(String(_id)) },
             {
                 $push: {
                     likes: {
-                        username: "dummy dulu",
+                        username,
                         createdAt: date,
                         updatedAt: date,
                     },
                 },
             }
         );
+        await redis.del("posts");
+        return like;
     }
 }
 

@@ -26,9 +26,9 @@ const resolvers = {
                 followerId: auth._id,
                 followingId: _id,
             });
-            console.log(data, "data crate follow");
+            // console.log(data, "data crate follow");
             const result = await Follow.getFollowing(auth._id);
-            console.log(result, "data crate follow");
+            // console.log(result, "data crate follow");
             return result;
             // return console.log("resolver follwoer");
         },
