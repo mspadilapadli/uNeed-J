@@ -7,15 +7,18 @@ const { startStandaloneServer } = require("@apollo/server/standalone");
 
 const postTypeDefs = require("./schema/Posts");
 const userTypeDefs = require("./schema/User");
+const followTypeDefs = require("./schema/Follow");
 
 const postResolver = require("./resolvers/Posts");
 const userResolver = require("./resolvers/User");
+const followResolver = require("./resolvers/Follow");
+
 const { verifyToken } = require("./helpers/jwt");
 const { GraphQLError } = require("graphql");
 
 const server = new ApolloServer({
-    typeDefs: [postTypeDefs, userTypeDefs],
-    resolvers: [postResolver, userResolver],
+    typeDefs: [postTypeDefs, userTypeDefs, followTypeDefs],
+    resolvers: [postResolver, userResolver, followResolver],
     introspection: true,
 });
 

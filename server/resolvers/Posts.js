@@ -2,10 +2,12 @@ const Post = require("../models/Posts");
 
 const resolvers = {
     Query: {
-        getPosts: async () => {
+        getPosts: async (_, args, contextValue) => {
+            const auth = contextValue.authentication();
             return Post.getPosts();
         },
-        getPostById: async (_, args) => {
+        getPostById: async (_, args, contextValue) => {
+            const auth = contextValue.authentication();
             const { _id } = args;
             const data = await Post.getPostById(_id);
             return data;
@@ -28,18 +30,20 @@ const resolvers = {
             const result = await Post.getPostById(data.insertedId);
             return result;
         },
-        createComment: async (_, args) => {
+        createComment: async (_, args, contextValue) => {
+            const auth = contextValue.authentication();
             const { _id, content } = args;
-            const comment = await Post.postComment(_id, content);
+            await Post.postComment(_id, content);
             // console.log(comment, "res comment");
             const result = await Post.getPostById(_id);
             console.log(result.comments);
             return result;
         },
 
-        createLike: async (_, args) => {
+        createLike: async (_, args, contextValue) => {
+            const auth = contextValue.authentication();
             const { _id } = args;
-            const like = await Post.postLike(_id);
+            await Post.postLike(_id);
             const result = await Post.getPostById(_id);
             console.log(result.likes);
             return result;

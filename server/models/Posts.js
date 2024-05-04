@@ -23,12 +23,15 @@ class Post {
                         preserveNullAndEmptyArrays: false,
                     },
                 },
+                {
+                    $project: {
+                        "author.password": 0,
+                    },
+                },
             ])
             .toArray();
     }
     static async getPostById(_id) {
-        console.log(_id, "id post model");
-
         // return this.collection().findOne({ _id: new ObjectId(String(_id)) });
         // return this.collection().findOne({ _id: new ObjectId(`${_id}`) });
         const data = await this.collection()
@@ -50,6 +53,11 @@ class Post {
                     $unwind: {
                         path: "$author",
                         preserveNullAndEmptyArrays: false,
+                    },
+                },
+                {
+                    $project: {
+                        "author.password": 0,
                     },
                 },
             ])

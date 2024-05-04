@@ -9,7 +9,8 @@ const resolvers = {
             return await User.getUsers();
         },
 
-        getUserById: async (_, args) => {
+        getUserById: async (_, args, contextValue) => {
+            const auth = contextValue.authentication();
             const { _id } = args;
             return await User.findUserById(_id);
         },
