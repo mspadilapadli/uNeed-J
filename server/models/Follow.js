@@ -40,6 +40,38 @@ class Follow {
             .toArray();
         return data;
     }
+
+    static async getFollower(_id) {
+        const data = await this.collection()
+            .aggregate([
+                {
+                    $match: {
+                        followingId: new ObjectId(_id),
+                    },
+                },
+                {
+                    $lookup: {
+                        from: "User",
+                        localField: "followerId",
+                        foreignField: "_id",
+                        as: "follower",
+                    },
+                },
+                {
+                    $unwind: {
+                        path: "$follower",
+                        preserveNullAndEmptyArrays: false,
+                    },
+                },
+                {
+                    $project: {
+                        "follower.password": 0,
+                    },
+                },
+            ])
+            .toArray();
+        return data;
+    }
     static async addFollow(newPost) {
         // console.log(newPost.authorId, "newPost authorId model");
         let date = new Date();

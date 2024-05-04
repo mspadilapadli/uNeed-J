@@ -5,11 +5,12 @@ type Follow {
    followingId: String
    followerId: String
    following: FollowDetail
+   follower: FollowDetail
    createdAt: String
    updatedAt: String
 }
 
-   type FollowDetail {
+type FollowDetail {
     _id: ID
     name: String
     username: String
@@ -18,8 +19,10 @@ type Follow {
 
 
 
+
 type Query {
 getFollowing(_id:ID!):[Follow]
+getFollower(_id:ID!):[Follow]
 }
 
 type Mutation {
