@@ -20,10 +20,10 @@ type Query {
 }
 
 input InputNewUser{
-   name: String
-   username: String
-   email: String
-   password: String
+   name: String!
+   username: String!
+   email: String! @constraint ( format: "email")
+   password: String!
 }
 
 type Mutation {

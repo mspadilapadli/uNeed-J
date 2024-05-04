@@ -4,6 +4,11 @@ if (process.env.NODE_ENV !== "production") {
 // require("dotenv").config();
 const { ApolloServer } = require("@apollo/server");
 const { startStandaloneServer } = require("@apollo/server/standalone");
+const {
+    constraintDirective,
+    constraintDirectiveTypeDefs,
+} = require("graphql-constraint-directive");
+const { makeExecutableSchema } = require("@graphql-tools/schema");
 
 const postTypeDefs = require("./schema/Posts");
 const userTypeDefs = require("./schema/User");
@@ -16,9 +21,21 @@ const followResolver = require("./resolvers/Follow");
 const { verifyToken } = require("./helpers/jwt");
 const { GraphQLError } = require("graphql");
 
-const server = new ApolloServer({
-    typeDefs: [postTypeDefs, userTypeDefs, followTypeDefs],
+let schema = makeExecutableSchema({
+    typeDefs: [
+        constraintDirectiveTypeDefs,
+        postTypeDefs,
+        userTypeDefs,
+        followTypeDefs,
+    ],
     resolvers: [postResolver, userResolver, followResolver],
+});
+schema = constraintDirective()(schema);
+
+const server = new ApolloServer({
+    schema,
+    // typeDefs: [postTypeDefs, userTypeDefs, followTypeDefs],
+    // resolvers: [postResolver, userResolver, followResolver],
     introspection: true,
 });
 

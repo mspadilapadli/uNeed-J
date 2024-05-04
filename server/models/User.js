@@ -55,6 +55,13 @@ class User {
                 },
             });
         }
+        if (username.length < 1) {
+            throw new GraphQLError("username is required ", {
+                extensions: {
+                    code: "Bad Request",
+                },
+            });
+        }
 
         const newEmail = await this.collection().findOne({
             email,
@@ -62,6 +69,13 @@ class User {
 
         if (newEmail) {
             throw new GraphQLError("email must be uniqe ", {
+                extensions: {
+                    code: "Bad Request",
+                },
+            });
+        }
+        if (email.length < 1) {
+            throw new GraphQLError("email is required ", {
                 extensions: {
                     code: "Bad Request",
                 },

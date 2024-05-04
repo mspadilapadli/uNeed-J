@@ -18,7 +18,7 @@ const resolvers = {
             const auth = contextValue.authentication();
             const { username } = args;
             const data = await User.searchUsername(username);
-            console.log(data, "res search user");
+            // console.log(data, "res search user");
             return data;
         },
     },
