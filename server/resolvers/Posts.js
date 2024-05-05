@@ -38,7 +38,7 @@ const resolvers = {
             await Post.postComment(_id, content, auth.username);
             // console.log(comment, "res comment");
             const result = await Post.getPostById(_id);
-            console.log(result.comments);
+            // console.log(result.comments);
             return result;
         },
 
@@ -47,7 +47,7 @@ const resolvers = {
             const { _id } = args;
             await Post.postLike(_id, auth.username);
             const result = await Post.getPostById(_id);
-            console.log(result.likes);
+            // console.log(result.likes);
             return result;
         },
     },

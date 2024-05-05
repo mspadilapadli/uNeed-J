@@ -20,17 +20,23 @@ const resolvers = {
     Mutation: {
         addFollowing: async (_, args, contextValue) => {
             const auth = contextValue.authentication();
+
+            // const isFollow = await Follow.addFollow(args, auth);
+
+            // return isFollow;
+
+            // // =====
+
             const { _id } = args;
-            // console.log(auth._id, "follwerId");
+
             const data = await Follow.addFollow({
                 followerId: auth._id,
                 followingId: _id,
             });
-            // console.log(data, "data crate follow");
+
             const result = await Follow.getFollowing(auth._id);
-            // console.log(result, "data crate follow");
+
             return result;
-            // return console.log("resolver follwoer");
         },
     },
 };
