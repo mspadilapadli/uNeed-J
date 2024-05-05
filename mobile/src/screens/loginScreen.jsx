@@ -55,7 +55,7 @@ export default function LoginScreen({ navigation }) {
                     />
                     <TouchableOpacity
                         style={{}}
-                        onPress={() => navigation.navigate("HomeTab")}
+                        onPress={() => navigation.navigate("Home")}
                     >
                         <Text
                             style={{
