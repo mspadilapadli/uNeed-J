@@ -1,4 +1,5 @@
 import {
+    ActivityIndicator,
     FlatList,
     StyleSheet,
     Text,
@@ -11,6 +12,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import ItemCard from "../components/ItemCard";
+import { gql, useQuery } from "@apollo/client";
 
 const Tab = createBottomTabNavigator();
 const DATA = [
@@ -65,14 +67,84 @@ const DATA = [
     },
 ];
 
-function HomeTab() {
+const GET_POST = gql`
+    query GetPosts {
+        getPosts {
+            _id
+            content
+            tags
+            imgUrl
+            authorId
+            comments {
+                content
+                username
+                createdAt
+                updatedAt
+            }
+            likes {
+                username
+                createdAt
+                updatedAt
+            }
+            createdAt
+            updatedAt
+            author {
+                _id
+                name
+                username
+                email
+            }
+        }
+    }
+`;
+
+function HomeTab({ navigation }) {
+    const { loading, error, data } = useQuery(GET_POST);
+
+    console.log(loading, error, data);
+
+    if (loading) {
+        return (
+            <View
+                style={{
+                    flex: 1,
+                    alignItems: "center",
+                    justifyContent: "center",
+                }}
+            >
+                <ActivityIndicator size={"large"} />
+            </View>
+        );
+    }
+    if (error) {
+        return (
+            <View
+                style={{
+                    flex: 1,
+                    alignItems: "center",
+                    justifyContent: "center",
+                }}
+            >
+                <Text>Something went wrong</Text>
+            </View>
+        );
+    }
     return (
         <View style={{ flex: 1 }}>
             <FlatList
-                data={DATA}
+                data={data.getPosts}
                 renderItem={({ item }) => {
                     return <ItemCard item={item} />;
                 }}
+                //  renderItem={({ item }) => {
+                //      <TouchableOpacity
+                //          onPress={() => {
+                //              navigation.navigate("PostDetail", { id: item.id });
+                //          }}
+                //      >
+                //          <ItemCard item={item} />;
+                //      </TouchableOpacity>;
+                //  }}
                 keyExtractor={(item) => item.id}
             ></FlatList>
         </View>
