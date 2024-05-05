@@ -1,3 +1,6 @@
+// import { gql, useMutation } from "@apollo/client";
+// import { AutoCleanedStrongCache } from "@apollo/client/utilities";
+// import { useState } from "react";
 import {
     StyleSheet,
     Text,
@@ -5,9 +8,21 @@ import {
     TouchableOpacity,
     View,
 } from "react-native";
-import { StatusBar } from "expo-status-bar";
+
+// const MUTATION_LOGIN = gql`
+//     mutation Login($email: String, $password: String) {
+//         login(email: $email, password: $password) {
+//             access_token
+//         }
+//     }
+// `;
 
 export default function LoginScreen({ navigation }) {
+    // const [email, setEmail] = useState("");
+    // const [password, setPassword] = useState("");
+
+    // const [loginhandler, { loading, error, data }] =
+    //     useMutation(MUTATION_LOGIN);
     return (
         <>
             <View
@@ -36,7 +51,7 @@ export default function LoginScreen({ navigation }) {
                         uNeed-J{" "}
                     </Text>
                     <TextInput
-                        placeholder=" Email"
+                        placeholder="  Email"
                         style={{
                             height: 45,
                             backgroundColor: "white",
@@ -45,7 +60,7 @@ export default function LoginScreen({ navigation }) {
                         }}
                     />
                     <TextInput
-                        placeholder=" Password"
+                        placeholder="  Password"
                         style={{
                             height: 45,
                             backgroundColor: "white",
@@ -56,6 +71,9 @@ export default function LoginScreen({ navigation }) {
                     <TouchableOpacity
                         style={{}}
                         onPress={() => navigation.navigate("Home")}
+                        // onPress={() => {
+                        //     console.log("login press");
+                        // }}
                     >
                         <Text
                             style={{
