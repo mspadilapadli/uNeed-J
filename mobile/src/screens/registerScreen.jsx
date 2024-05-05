@@ -88,13 +88,5 @@ export default function RegisterScreen({ navigation }) {
                 </View>
             </View>
         </>
-        // <View
-        //     style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
-        // >
-        //     <Button
-        //         title="Sumbmit"
-        //         onPress={() => navigation.navigate("Login")}
-        //     />
-        // </View>
     );
 }
