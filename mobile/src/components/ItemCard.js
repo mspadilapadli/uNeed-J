@@ -1,7 +1,6 @@
 import { StyleSheet, Text, View, Image } from "react-native";
 
 export default function ItemCard({ item }) {
-    console.log(item, "item itemcard");
     return (
         <View style={styles.item}>
             <View

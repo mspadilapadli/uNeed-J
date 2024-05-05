@@ -18,7 +18,7 @@ const resolvers = {
             const auth = contextValue.authentication();
             const { username } = args;
             const data = await User.searchUsername(username);
-            // console.log(data, "res search user");
+
             return data;
         },
     },
@@ -31,11 +31,9 @@ const resolvers = {
                 email,
                 password,
             });
-            // const option = {
-            //     projection: { password: 0 },
-            // };
+
             const result = await User.findUserById(data.insertedId);
-            console.log(result);
+
             return result;
         },
         login: async (_, args) => {
@@ -71,7 +69,6 @@ const resolvers = {
                 email: user.email,
                 username: user.username,
             });
-            // console.log(access_token, "accesstoken");
 
             return { access_token };
         },

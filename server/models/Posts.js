@@ -10,7 +10,7 @@ class Post {
 
     static async getPosts() {
         let posts = await redis.get("posts");
-        console.log(posts, "redis posts");
+
         if (posts) {
             return JSON.parse(posts);
         } else {
@@ -81,7 +81,6 @@ class Post {
         return data[0];
     }
     static async addPost(newPost) {
-        // console.log(newPost.authorId, "newPost authorId model");
         if (!newPost.content || newPost.content.length < 1) {
             throw new GraphQLError("content is required ", {
                 extensions: {
@@ -103,9 +102,6 @@ class Post {
     }
 
     static async postComment(_id, content, username) {
-        // console.log(newPost, "newPost model");
-        // console.log(username, "username  in model");
-
         let date = new Date();
         let comment = await this.collection().updateOne(
             { _id: new ObjectId(String(_id)) },
@@ -125,8 +121,6 @@ class Post {
     }
 
     static async postLike(_id, username) {
-        // console.log(newPost, "newPost model");
-
         let date = new Date();
         const like = await this.collection().updateOne(
             { _id: new ObjectId(String(_id)) },

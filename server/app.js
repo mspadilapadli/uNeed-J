@@ -70,7 +70,6 @@ startStandaloneServer(server, {
                         },
                     });
                 }
-                // console.log(payload, "payload");
 
                 return payload;
             },

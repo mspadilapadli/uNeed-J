@@ -70,7 +70,6 @@ class Follow {
         return data;
     }
     static async addFollow(newPost) {
-        // console.log(newPost.authorId, "newPost authorId model");
         let date = new Date();
         let isFollow = await this.collection().insertOne({
             ...newPost,

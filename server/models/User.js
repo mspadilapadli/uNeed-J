@@ -43,7 +43,6 @@ class User {
     }
 
     static async addUser({ name, username, email, password }) {
-        // console.log(newUser, "newUser model");
         const newUsername = await this.collection().findOne({
             username,
         });
